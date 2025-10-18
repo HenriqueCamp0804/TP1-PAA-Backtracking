@@ -121,4 +121,41 @@ Mapa *carregarMapa(const char *nome_arquivo){
     return mapa;
 }
 
-//Implementar funcao de liberarMapa e ImprimirMapa
+//Funcao para imprimir o mapa
+void imprimirMapa(Mapa *mapa){
+    if(mapa == NULL || mapa->matrizMapa == NULL){
+        printf("Erro: Mapa nao iniciado.\n");
+        return;
+    }
+    printf("\n---Mapa lido: %dx%d---\n",mapa->altura,mapa->largura);
+    for(int i=0;i<mapa->altura;i++){
+        for(int j=0;j<mapa->largura;j++){
+            printf("%c",mapa->matrizMapa[i][j]); //Imprime o caractere da celula da matriz
+        }
+        printf("\n");
+    }
+    printf("Posicao inicial (X): Linha %d, Coluna %d\n",mapa->posInicial_linha+1, mapa->posInicial_coluna+1);
+    printf("Parâmetros: D=%d, D'=%d, A=%d\n",mapa->durabilidadeInicial,mapa->custoMovimento, mapa->bonusPeca);    
+}
+
+//Funcao para liberar a memoria alocada
+void liberarMapa(Mapa *mapa){
+    if(mapa == NULL){
+        return;
+    }
+    if(mapa->matrizMapa != NULL){
+        for(int i=0;i<mapa->altura;i++){
+            free(mapa->matrizMapa[i]); 
+        }
+    }
+    if(mapa->localVisitado != NULL){
+        for(int i=0;i<mapa->altura;i++){
+            free(mapa->localVisitado[i]);
+        }
+    }
+    //Liberar os ponteiros
+    free(mapa->matrizMapa);
+    free(mapa->localVisitado);
+    //Libera a estrutura
+    free(mapa);
+}
