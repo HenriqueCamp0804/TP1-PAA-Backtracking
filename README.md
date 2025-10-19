@@ -6,7 +6,7 @@ Universidade Federal de Viçosa - Campus Florestal - Curso: Ciência da Computa�
 
 Disciplina: Projeto e Análise de Algoritmos (PAA)
 
-Alunos: Henrique Campos - 4673 / Davi de Souza - XXXX / Guilherme Gustavo - XXXX / Decio Cançado - XXXX
+Alunos: Henrique Campos - 4673 / Davi de Souza - XXXX / Guilherme Gustavo - 5378 / Decio Cançado - 5782
 
 Professor: Daniel Mendes Barbosa 
 
