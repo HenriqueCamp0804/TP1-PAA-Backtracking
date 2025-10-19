@@ -1,5 +1,5 @@
-#ifndef BACKTRACKING.H
-#define BACKTRACKING.H
+#ifndef BACKTRACKING_H
+#define BACKTRACKING_H
 
 #include "mapa.h"
 

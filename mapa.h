@@ -14,7 +14,7 @@ typedef struct{
     int posInicial_coluna; 
     int posInicial_linha;
     char **matrizMapa; //matriz para o mapa
-    bool **localVisitado // matriz para marcar os lugares que ja foram visitados
+    bool **localVisitado; // matriz para marcar os lugares que ja foram visitados
 
 } Mapa;
 

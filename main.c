@@ -28,7 +28,7 @@ int main(){
                 printf("\nApesar da bravura a tripulacao falhou em sua jornada\n");
             }
 
-            #ifdef MODO ANALISE
+            #ifdef MODO_ANALISE
             printf("\n====================================\n");
             printf("|            MODO ANALISE             |\n");
             printf("======================================\n");
