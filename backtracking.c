@@ -18,7 +18,7 @@ static bool movimentar(
     
     //Casos de falha
     //Sair dos limites
-    if(linha<0 || linha >= mapa->altura || coluna < 0 || coluna >= mapa->largura){
+    if(linha < 0 || linha >= mapa->altura || coluna < 0 || coluna >= mapa->largura){
         return false;
     }
     //Durabilidade acabar
@@ -35,8 +35,8 @@ static bool movimentar(
     }
 
     //Processar a célula atual
-    //Marcar que a celula foi visitada
-    mapa->localVisitado[linha][coluna] == true;
+    //Marcar que a celula foi visitada (CORRIGIDO: = ao invés de ==)
+    mapa->localVisitado[linha][coluna] = true;
 
     char celulaAtual = mapa->matrizMapa[linha][coluna];
     if(celulaAtual == 'P'){
@@ -45,7 +45,8 @@ static bool movimentar(
     }
 
     //Imprimir estado atual
-    printf("Linha: %d, Coluna: %d, Durabilidade: %d, Pecas restantes: %d\n", linha+1, coluna+1,durabilidadeAtual,4-pecasColetadas);
+    printf("Linha: %d, Coluna: %d, Durabilidade: %d, Pecas restantes: %d\n", 
+           linha+1, coluna+1, durabilidadeAtual, 4-pecasColetadas);
 
     //Encontra destino
     if(celulaAtual == 'F'){
@@ -64,34 +65,37 @@ static bool movimentar(
     if(pecasColetadas < 4){
         proxDurabilidade -= mapa->custoMovimento;
     }
-    //Movimentacoes
+    
+    //Movimentos verticais (cima/baixo) - para | + X P
     if(celulaAtual == '|' || celulaAtual == '+' || celulaAtual == 'X' || celulaAtual == 'P'){
-        if(movimentar(mapa,analise,linha + 1,coluna,proxDurabilidade,pecasColetadas,profundidadeAtual+1)){
+        if(movimentar(mapa, analise, linha + 1, coluna, proxDurabilidade, pecasColetadas, profundidadeAtual+1)){
             return true;
         }
-        if(movimentar(mapa,analise,linha - 1,coluna,proxDurabilidade,pecasColetadas,profundidadeAtual+1)){
+        if(movimentar(mapa, analise, linha - 1, coluna, proxDurabilidade, pecasColetadas, profundidadeAtual+1)){
             return true;
         }
     }
 
-    if(celulaAtual == '|' || celulaAtual == '+' || celulaAtual == 'X' || celulaAtual == 'P'){
+    //Movimentos horizontais (esquerda/direita) - para - + X P
+    if(celulaAtual == '-' || celulaAtual == '+' || celulaAtual == 'X' || celulaAtual == 'P'){
         if(movimentar(mapa, analise, linha, coluna + 1, proxDurabilidade, pecasColetadas, profundidadeAtual + 1)){
             return true;
         }
-        if(movimentar(mapa,analise,linha,coluna - 1, proxDurabilidade,pecasColetadas, profundidadeAtual + 1)){
+        if(movimentar(mapa, analise, linha, coluna - 1, proxDurabilidade, pecasColetadas, profundidadeAtual + 1)){
             return true;
         }
     }
+    
+    //Backtrack: desmarcar célula como visitada
     mapa->localVisitado[linha][coluna] = false;
     return false;
 }
 
-bool resolverLabirinto(Mapa *mapa,Analise *analise){
+bool resolverLabirinto(Mapa *mapa, Analise *analise){
     analise->chamadaRecursiva = 0;
     analise->profundidadeMaxima = 0;
 
-    return movimentar(mapa,analise,
-    mapa->posInicial_linha,mapa->posInicial_coluna,
-    mapa->durabilidadeInicial,0,0);
-    
+    return movimentar(mapa, analise,
+                     mapa->posInicial_linha, mapa->posInicial_coluna,
+                     mapa->durabilidadeInicial, 0, 0);
 }
